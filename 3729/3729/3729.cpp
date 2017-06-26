@@ -27,6 +27,7 @@ int n, K, L;
 vector<pt> pts(100);
 vector<line> lines(4950);
 vector<int> v(100);
+vector<int> D(10000, -1);
 
 bool check(const pt &p, const line &l) {
 	return l.b * p.y + l.a * p.x + l.c > 0;
@@ -59,7 +60,9 @@ double F(vector<int> &v, const int &x) {
 		for (int i = 0; i < n; ++i) {
 			double mind = -1;
 			for (int l = 0; l < K; ++ l) {
-				double d = dist(pts[i], lines[v[l]]);
+				double d;
+				if (D[i * 100 + v[l]] == -1) D[i * 100 + v[l]] = dist(pts[i], lines[v[l]]);
+				d = D[i * 100 + v[l]];
 				mind = mind == -1 ? d : min(mind, d);
 			}
 			maxd = max(mind, maxd);
@@ -69,6 +72,7 @@ double F(vector<int> &v, const int &x) {
 	else {
 		double mind = -1;
 		int vn = x == 0 ? 0 : v[x - 1] + 1;
+		if (L - vn < K - x) return -1;
 		for (int i = vn; i < L; i++) {
 			v[x] = i;
 			double maxd = F(v, x + 1);
@@ -79,6 +83,7 @@ double F(vector<int> &v, const int &x) {
 }
 
 double solve() {
+	fill(D.begin(), D.end(), -1);
 	return F(v, 0);
 }
 
