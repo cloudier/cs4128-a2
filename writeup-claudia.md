@@ -23,9 +23,11 @@ taking in input if we found that the graph had a cycle. This meant that
 the program didn't correctly process subsequent input.
 
 # 3730 Snakes on a plane
-For each snake, find the head and the tail. Use union find to check if
+For each snake, find the head and the tail using BFS. Check if
 lengthening the head or tail will cause the snake to touch another snake
 or loop back on itself.
+
+Note: this implementation gives the wrong answer.
 
 # 3727 The mastermind master's mind
 Not attempted.
